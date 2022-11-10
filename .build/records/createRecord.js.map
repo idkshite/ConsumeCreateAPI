@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../records/createRecord.ts"],
-  "sourcesContent": ["import { Request, Response } from \"express\";\nimport { getMongoConnection } from \"../mongodb\";\nimport { DateTime } from \"luxon\"\n\ntype FocusRecordType = \"start\" | \"stop\"\n\ntype FocusRecord = {\n  focus: \"consume\" | \"create\"\n  time: string\n  type: FocusRecordType\n}\n\nexport async function createRecordHandler(req: Request, res: Response, type: FocusRecordType) {\n\n  const mongo = await getMongoConnection();\n\n  const focus = req.body?.focus;\n  const time = DateTime.fromISO(req.body?.calledAt, { zone: \"utc\" }).toISO();\n\n  const record: FocusRecord = { focus, time, type }\n\n  await mongo.collection(\"records\").insertOne(record);\n\n  res.send(JSON.stringify({ ok: true }))\n\n}"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AACA,qBAAmC;AACnC,mBAAyB;AAUzB,mCAA0C,KAAc,KAAe,MAAuB;AAZ9F;AAcE,QAAM,QAAQ,MAAM;AAEpB,QAAM,QAAQ,UAAI,SAAJ,mBAAU;AACxB,QAAM,OAAO,sBAAS,QAAQ,UAAI,SAAJ,mBAAU,UAAU,EAAE,MAAM,SAAS;AAEnE,QAAM,SAAsB,EAAE,OAAO,MAAM;AAE3C,QAAM,MAAM,WAAW,WAAW,UAAU;AAE5C,MAAI,KAAK,KAAK,UAAU,EAAE,IAAI;AAAA;",
-  "names": []
-}
