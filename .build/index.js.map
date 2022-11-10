@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../index.ts"],
+  "sourcesContent": ["import { Request, Response } from \"express\";\nimport { DateTime } from \"luxon\"\nimport { createRecordHandler } from \"./records/createRecord\";\n\nconst express = require('express')\nconst app = express()\nconst port = 3000\n\napp.use(express.json());\n\napp.use(function(req, res, next) {\n  if (req.header(\"Authorization\") !== process.env.API_KEY) {\n    res.status(403).send(\"Invalid API Key\")\n  }\n  next();\n});\n\napp.post('/record/start', (req: Request, res: Response) => createRecordHandler(req, res, \"start\"))\napp.post('/record/stop', (req: Request, res: Response) => createRecordHandler(req, res, \"stop\"))\n\napp.listen(port, () => {\n  console.log(`Example app listening on port ${port}`)\n})"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAEA,0BAAoC;AAEpC,MAAM,UAAU,QAAQ;AACxB,MAAM,MAAM;AACZ,MAAM,OAAO;AAEb,IAAI,IAAI,QAAQ;AAEhB,IAAI,IAAI,SAAS,KAAK,KAAK,MAAM;AAC/B,MAAI,IAAI,OAAO,qBAAqB,QAAQ,IAAI,SAAS;AACvD,QAAI,OAAO,KAAK,KAAK;AAAA;AAEvB;AAAA;AAGF,IAAI,KAAK,iBAAiB,CAAC,KAAc,QAAkB,6CAAoB,KAAK,KAAK;AACzF,IAAI,KAAK,gBAAgB,CAAC,KAAc,QAAkB,6CAAoB,KAAK,KAAK;AAExF,IAAI,OAAO,MAAM,MAAM;AACrB,UAAQ,IAAI,iCAAiC;AAAA;",
+  "names": []
+}

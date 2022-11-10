@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../mongodb.ts"],
+  "sourcesContent": ["import { MongoClient } from 'mongodb'\n\nconst password = process.env.MONGODB_PASSWORD\n\nconst url = `mongodb+srv://admin:${password}@conversation-recorder.iubth.mongodb.net/?retryWrites=true&w=majority`;\n\nconst client = new MongoClient(url);\n\n// Database Name\nconst dbName = 'experiment';\n\nlet mongoPromise: Promise<any>;\n\nexport async function getMongoConnection() {\n  if (!mongoPromise) {\n    mongoPromise = createMongoConnection()\n  }\n  return mongoPromise;\n}\n\nasync function createMongoConnection() {\n  // Use connect method to connect to the server\n  await client.connect();\n  console.log('Connected successfully to server');\n  const db = client.db(dbName);\n\n  return db;\n}\n\ncreateMongoConnection()\n  .then(() => { })\n  .catch(console.error)\n  .finally(() => client.close());"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA,qBAA4B;AAE5B,MAAM,WAAW,QAAQ,IAAI;AAE7B,MAAM,MAAM,uBAAuB;AAEnC,MAAM,SAAS,IAAI,2BAAY;AAG/B,MAAM,SAAS;AAEf,IAAI;AAEJ,oCAA2C;AACzC,MAAI,CAAC,cAAc;AACjB,mBAAe;AAAA;AAEjB,SAAO;AAAA;AAGT,uCAAuC;AAErC,QAAM,OAAO;AACb,UAAQ,IAAI;AACZ,QAAM,KAAK,OAAO,GAAG;AAErB,SAAO;AAAA;AAGT,wBACG,KAAK,MAAM;AAAA,GACX,MAAM,QAAQ,OACd,QAAQ,MAAM,OAAO;",
+  "names": []
+}
